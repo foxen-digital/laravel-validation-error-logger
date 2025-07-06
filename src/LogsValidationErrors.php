@@ -8,27 +8,34 @@ use Illuminate\Validation\Validator;
 
 trait LogsValidationErrors
 {
-    protected $logChannel = 'default';
-    protected $excludeFromLogging = [];
-    
     public function after(): array
     {
-        $class = get_class($this);
-        $data = Arr::except($validator->getData(), $this->excludeFromLogging);
         return [
-            function (Validator $validator) use ($class) {
+            function (Validator $validator) {
                 if ($validator->failed()) {
-                    Log::channel($this->logChannel)->debug(
+                    $logChannel = property_exists($this, 'logChannel') && $this->logChannel
+                        ? $this->logChannel
+                        : config('validation-error-logger.log_channel', 'default');
+
+                    $configExcludes = config('validation-error-logger.exclude_from_logging', []);
+
+                    $classExcludes = property_exists($this, 'excludeFromLogging') && is_array($this->excludeFromLogging)
+                        ? $this->excludeFromLogging
+                        : [];
+
+                    $excludeFromLogging = array_merge($configExcludes, $classExcludes);
+
+                    Log::channel($logChannel)->debug(
                         'Validation failure',
                         [
                             'URL' => request()->url(),
-                            'Validator' => $class,
+                            'Validator' => get_class($this),
                             'Errors' => $validator->errors()->all(),
-                            'Data' => $data,
+                            'Data' => Arr::except($validator->getData(), $excludeFromLogging),
                         ]
                     );
                 }
-            }
+            },
         ];
     }
 }

@@ -1,0 +1,45 @@
+{
+  "name": "foxen/laravel-validation-error-logger",
+  "description": "A Laravel package to log validation errors.",
+  "type": "laravel-package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "mrdth",
+      "email": "mrdth@zeventien.org"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "illuminate/support": "^10.0|^11.0",
+    "illuminate/validation": "^10.0|^11.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.0|^9.0",
+    "pestphp/pest": "^2.0",
+    "pestphp/pest-plugin-laravel": "^2.0",
+    "laravel/pint": "^1.23"
+  },
+  "autoload": {
+    "psr-4": {
+      "Foxen\\LaravelValidationErrorLogger\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Foxen\\LaravelValidationErrorLogger\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Foxen\\LaravelValidationErrorLogger\\ServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
