@@ -34,7 +34,10 @@ return [
     | `config/logging.php` file. The default is 'stack'.
     |
     */
-    'log_channel' => env('LOG_VALIDATION_ERRORS_CHANNEL', 'stack'),
+    "log_channel" => env(
+        "LOG_VALIDATION_ERRORS_CHANNEL",
+        env("LOG_CHANNEL", "stack")
+    ),
 
     /*
     |--------------------------------------------------------------------------
