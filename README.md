@@ -43,7 +43,7 @@ return [
     |
     | This option allows you to specify a list of fields that should be
     | excluded from the logged data. This is useful for preventing sensitive
-    | information from being written to your logs. By default, stanard password
+    | information from being written to your logs. By default, standard password
     | fields are already included.
     */
     'exclude_from_logging' => [
